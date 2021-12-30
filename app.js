@@ -6,7 +6,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 const app = express();
 const sessionRouter = require('./src/router/sessionsRouter');
 const adminRouter = require('./src/router/adminRouter');
@@ -30,9 +30,22 @@ app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/google', googleRouter);
 
-app.get('/', (req, res)=> {
-    res.render('index', { title: 'Node js', data: ['a', 'b', 'c'] });
+app.get('/', (req, res, next)=> {
+    if(!req.user) {
+        res.render('signin');
+    }
+    else {
+        res.render('index');
+    }
 });
+
+app.get('/index', (req, res)=> {
+    res.render('index');
+});
+
+app.get('/signUp',(req, res)=> {
+    res.render('signup')
+})
 
 app.listen(PORT, ()=> {
     debug(`listening on port ${chalk.green(PORT)}`);

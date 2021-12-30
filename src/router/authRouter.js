@@ -21,10 +21,11 @@ authRouter.route('/signUp').post((req, res)=> {
             const user = { username, password };
             const results = await db.collection('users').insertOne(user);
             req.login(results.insertedId, ()=> {
-                res.redirect('/auth/profile');
+                res.redirect('/index');
             });
         } catch(err) {
             debug(err);
+            res.send('Error could not create account');
         }
         client.close();
     })();
@@ -33,7 +34,7 @@ authRouter.route('/signUp').post((req, res)=> {
 authRouter.route('/signIn').get((req, res)=> {
     res.render('signin');
 }).post(passport.authenticate('local', {
-    successRedirect: '/auth/profile',
+    successRedirect: '/index',
     failureRedirect: '/'
 }));
 
@@ -44,12 +45,11 @@ authRouter.route('/google')
 authRouter.route('/logout').get((req, res)=> {
     req.logout();
     req.session.destroy();
-    res.send('Goodbye');
+    res.redirect('/')
 });
 
 authRouter.route('/profile').get((req, res)=> {
     res.json(req.user);
-    // res.send(`<a href="/auth/logout">Logout</a>`);
 })
 
 module.exports = authRouter;

@@ -6,7 +6,7 @@ const googleRouter = express.Router();
 
 googleRouter.route('/callback')
     .all(passport.authenticate('google', {
-        successRedirect: '/auth/profile',
+        successRedirect: '/index',
         failureRedirect: '/'
     })
 )
