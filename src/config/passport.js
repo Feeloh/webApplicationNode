@@ -1,5 +1,6 @@
 const passport = require('passport');
 require('./strategies/local.strategy')();
+require('./strategies/google.strategy')();
 
 module.exports = function passportConfig(app) {
     app.use(passport.initialize());

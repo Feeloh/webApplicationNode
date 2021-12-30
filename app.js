@@ -3,7 +3,6 @@ const chalk = require('chalk');
 const debug = require('debug')('app');
 const morgan = require('morgan');
 const path = require('path');
-const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
@@ -11,7 +10,8 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const sessionRouter = require('./src/router/sessionsRouter');
 const adminRouter = require('./src/router/adminRouter');
-const authRouter = require('./src/router/authRouter')
+const authRouter = require('./src/router/authRouter');
+const googleRouter = require('./src/router/googleRouter');
 
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -28,6 +28,7 @@ app.set('view engine', 'ejs');
 app.use('/sessions', sessionRouter);
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
+app.use('/google', googleRouter);
 
 app.get('/', (req, res)=> {
     res.render('index', { title: 'Node js', data: ['a', 'b', 'c'] });

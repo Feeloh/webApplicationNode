@@ -1,3 +1,4 @@
+require('dotenv/config');
 const passport = require('passport');
 const { Strategy } = require('passport-local');
 const { MongoClient } = require('mongodb');
@@ -8,8 +9,9 @@ module.exports = function localStrategy() {
         passwordField: 'password'
     }, 
     (username, password, done)=> {
-        const url = 'mongodb+srv://philip:Malkia254@globomantics.9lomc.mongodb.net?retryWrites=true&w=majority';
-        const dbName = 'globomantics';
+        const url = process.env.DATABASEURL;
+        const dbName = process.env.DBNAME;
+        
         (async function validateUser() {
             let client;
             try {
