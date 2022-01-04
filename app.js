@@ -12,6 +12,7 @@ const sessionRouter = require('./src/router/sessionsRouter');
 const adminRouter = require('./src/router/adminRouter');
 const authRouter = require('./src/router/authRouter');
 const googleRouter = require('./src/router/googleRouter');
+const twitterRouter = require('./src/router/twitterRouter');
 
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -29,6 +30,7 @@ app.use('/sessions', sessionRouter);
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/google', googleRouter);
+app.use('/twitter', twitterRouter);
 
 app.get('/', (req, res, next)=> {
     if(!req.user) {

@@ -42,6 +42,10 @@ authRouter.route('/google')
     .all(passport.authenticate('google', { scope: ['email', 'profile'] })
 );
 
+authRouter.route('/twitter')
+    .all(passport.authenticate('twitter')
+);
+
 authRouter.route('/logout').get((req, res)=> {
     req.logout();
     req.session.destroy();
